@@ -42,6 +42,8 @@ input {
   border: 1px solid #039be5;
 }
 
+
+
 button {
   width: 100%;
   padding: 12px 20px;
@@ -56,4 +58,25 @@ button {
 
 button:hover {
   background-color:#bd7c28;
+}
+
+.img-carousel {
+  width: 800px; /* Establece el ancho deseado */
+  height: 650px; /* Establece la altura deseada */
+  object-fit: cover; /* Asegura que la imagen cubra completamente el contenedor */
+}
+/* Estilos personalizados para el navbar */
+.navbar {
+  font-size: 1.25rem; /* Tamaño de letra mediano */
+}
+
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem; /* Espaciado de enlaces */
+}
+
+.img {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/img/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

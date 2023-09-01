@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,20 +9,27 @@ import { FormBuilder, FormGroup,FormControl, Validators } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  user = {
+    username: '',
+    pass: ''
+  }
 
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder) { }
+
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      usuario: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]]
     });
   }
 
-  get emailtxt(){
-    return this.loginForm.get('email');
+  get usuariotxt(){
+    return this.loginForm.get('usuario');
   }
   get contratxt(){
     return this.loginForm.get('password');
@@ -31,16 +40,16 @@ export class LoginComponent implements OnInit {
     return formControl?.invalid && (formControl?.touched || formControl?.dirty);
   }
 
-  login() {
-    if (this.loginForm.invalid) {
-      return;
-    }
 
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
-
-    // Aquí puedes agregar la lógica para validar las credenciales de inicio de sesión
-    console.log('Email:', email);
-    console.log('Contraseña:', password);
+  logIn() {
+    console.log(this.user);
+    this.authService.singin(this.user).subscribe((res: any) => {
+      console.log(res);
+      localStorage.setItem('token', res.token);
+      this.router.navigate(['list1']);
+    }, error => {
+      console.error(error); // Opcional: Imprimir el error en la consola para fines de depuración
+      alert('Usuario inválido');
+    });
   }
 }

@@ -1,37 +1,57 @@
-
-<mat-toolbar color="primary">
-  <i class="fa fa-car p-4" aria-hidden="true"> </i>
-  <h1>Curso de conducir </h1>
-  <span class="example-spacer"></span>
-
-</mat-toolbar>
+<div class="img">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container justify-content-center">
+      <i class="fa fa-car p-4" aria-hidden="true" style="color: beige;" routerLink="/" > </i>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/form">Registrarse en el curso</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
   <div class="login-container">
-    <form [formGroup]="loginForm" class="login-form" (submit)="login()">
+    <form [formGroup]="loginForm" class="login-form">
       <h2>Iniciar sesión</h2>
+  
       <div class="form-group">
-        <label for="email">
-          <i class="fa fa-envelope" aria-hidden="true"></i> Email:
+  
+        <label for="usuario">
+          <i class="fa fa-envelope" aria-hidden="true"></i>Usuario:
         </label>
-        <input type="email" id="email" formControlName="email" required>
-
-        <div class="mb-3 text-danger" *ngIf="emailtxt?.errors && loginForm.get('email')?.touched">
-          <p *ngIf="emailtxt?.hasError('required')">Este campo debe tener un email</p>
-          <p *ngIf="emailtxt?.hasError('email')">Ingresa un email válido</p>
+  
+        <input [(ngModel)]="user.username" type="usuario" id="usuario" formControlName="usuario" required>
+        <div class="mb-3 text-danger" *ngIf="usuariotxt?.errors && loginForm.get('usuario')?.touched">
+          <p *ngIf="usuariotxt?.hasError('required')">Este campo debe tener un usuario</p>
+          <p *ngIf="usuariotxt?.hasError('minlength')">El usuario debe tener al menos 4 caracteres</p>
+          <p *ngIf="usuariotxt?.hasError('maxlength')">El usuario debe tener al máximo 10 caracteres</p>
         </div>
-
-
       </div>
       <div class="form-group">
         <label for="password">
           <i class="fa fa-key" aria-hidden="true"></i> Contraseña:
         </label>
-        <input type="password" id="password" formControlName="password" required>
+        <input [(ngModel)]="user.pass" type="password" id="password" formControlName="password" required>
         <div class="mb-3 text-danger" *ngIf="contratxt?.errors && loginForm.get('password')?.touched">
           <p *ngIf="contratxt?.hasError('required')">Este campo debe tener una contraseña</p>
+          <p *ngIf="contratxt?.hasError('minlength')">La contraseña debe tener al menos 8 caracteres</p>
+          <p *ngIf="contratxt?.hasError('maxlength')">La contraseña debe tener al máximo 15 caracteres</p>
         </div>
       </div>
-      <button routerLink="/list1" [disabled]="loginForm.invalid" style="background-color: #ffab40; " type="submit" >Iniciar sesión</button>
+  
+      <button  (click)="logIn()" [disabled]="loginForm.invalid" style="background-color: #ffab40; " >Iniciar sesión</button>
     </form>
   </div>
-
+</div>
